@@ -9,12 +9,11 @@ from sentence_transformers import SentenceTransformer, util
 @st.cache_resource
 def load_model():
     #IR DL model config
-    dl_ir_model_name = "sentence-transformers/all-mpnet-base-v2"
-    #vanilla model
-    dl_ir_model = SentenceTransformer(dl_ir_model_name)
+    dl_ir_model = torch.load('model.pt')
     return dl_ir_model
 
 model = load_model()
+model.eval()
 
 @st.cache_data
 def load_data():

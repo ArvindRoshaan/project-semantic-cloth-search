@@ -1,0 +1,11 @@
+altair==4.2.2
+google-api-core==2.11.0
+google-auth==2.18.1
+google-cloud-core==2.3.2
+h5py
+pandas==1.4.4
+streamlit==1.22.0
+torch==2.0.0
+watchdog==3.0.0
+sentence-transformers
+sentencepiece==0.1.95
