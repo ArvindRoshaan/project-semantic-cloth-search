@@ -6,14 +6,18 @@ import torch
 import h5py
 from sentence_transformers import SentenceTransformer, util
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 @st.cache_resource
 def load_model():
     #IR DL model config
-    dl_ir_model = torch.load('model.pt')
-    return dl_ir_model
+    with torch.no_grad():    
+        dl_ir_model = torch.load('model.pt')
+        dl_ir_model.to(device)
+        dl_ir_model.eval()
+        return dl_ir_model
 
 model = load_model()
-model.eval()
 
 @st.cache_data
 def load_data():
@@ -33,8 +37,9 @@ def load_embedding():
 embedding = load_embedding()
 
 def getQueryEmbedding(query, model):
-    queryEmbedding = model.encode(query)
-    return queryEmbedding
+    with torch.no_grad():
+        queryEmbedding = model.encode(query)
+        return queryEmbedding
 
 def getTopK(query, sentEmbeddings, model, k=5):
     queryEmbedding = getQueryEmbedding(query, model)
